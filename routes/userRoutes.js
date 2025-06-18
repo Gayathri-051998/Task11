@@ -12,4 +12,6 @@ userRouter.post('/logout',isAuthenticated,logout);
 userRouter.get('/me',isAuthenticated, me);
 
 // export the router
+
+
 module.exports = userRouter;
