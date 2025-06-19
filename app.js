@@ -1,26 +1,12 @@
-// import the express module
 const express = require('express');
-const userRouter = require('./routes/userRoutes');
-// const morgan = require('morgan');
-const logger = require('./utils/logger');
-const errorRoute = require('./utils/errorRoute');
-
+const userRoutes = require('./routes/userRoutes');
 const app = express();
-// middleware to parse the request body
+
 app.use(express.json());
+app.use('/users', userRoutes);
 
-// middleware to log all the requests using morgan
-// app.use(morgan('dev'));
+app.get('/', (req, res) => res.send('OK'));
 
-// middleware to log all the requests using custom logger
-app.use(logger);
+app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
 
-app.use('/users', userRouter);
-app.get("/",(req,res)=>{
-    res.send("server is running..")
-})
-
-// middleware to handle 404 errors
-app.use(errorRoute);
-app.use((req, res) => res.status(404).json({ message: "Route not found" }));
 module.exports = app;
